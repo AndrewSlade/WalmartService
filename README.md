@@ -1,3 +1,4 @@
+# WalmartService
 
 ### What and Why
 
@@ -34,7 +35,6 @@ If you are using an IDE like Eclipse, you can also download the gradle plugin fr
 ### Unit tests
 Unit tests for services are run using `gradle build`
 
-# WalmartService
 
 
 
