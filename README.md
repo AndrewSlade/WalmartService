@@ -11,7 +11,7 @@ Service for holding and reserving tickets for concert. Walmart application progr
 ### Features
 This service serves to facilitate a reservation system for a concert venue.
 
-This is accomplished via a variety of public endpoints. 
+This is accomplished via a variety of public services methods. 
 These are:
 1. the total number of seats available (no parameters)
 2. Find and hold a block (accepts a total number of seats and customer email) 
