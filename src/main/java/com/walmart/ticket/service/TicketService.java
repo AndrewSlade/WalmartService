@@ -14,8 +14,6 @@ import com.walmart.ticket.exception.service.SeatReservationCreationException;
  */
 public interface TicketService {
 
-	public static final int EXPIRATION_TIME_IN_MILLISECONDS = 500000;
-
 	/**
 	 * The number of seats in the venue that are neither held nor reserved
 	 *
@@ -57,8 +55,9 @@ public interface TicketService {
 	 * expire
 	 * 
 	 * @param date
+	 * @throws SeatHoldReservationReleaseException
 	 */
-	public void releaseLatestHold(Date date);
+	public void releaseLatestHold(Date date) throws SeatHoldReservationReleaseException;
 
 	/**
 	 * Clears the hold and resets the entries in the array

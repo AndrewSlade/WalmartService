@@ -14,6 +14,7 @@ import com.walmart.seat.model.seat.SeatAssignment;
 import com.walmart.ticket.exception.service.SeatHoldCreationException;
 import com.walmart.ticket.exception.service.SeatHoldReservationReleaseException;
 import com.walmart.ticket.exception.service.SeatReservationCreationException;
+import com.walmart.ticketing.constants.TicketingConstants;
 
 /**
  * 
@@ -27,12 +28,9 @@ public class TicketServiceImpl implements TicketService {
 	private int heldSeatCount = 0;
 	private int reservedSeatCount = 0;
 
-	private static final int totalRows = 10;
-	private static final int totalColumns = 10;
-
 	// 2 dimensional array storing seats for a 10 x 10 space
 	// The first entry indicates the total number of sequential seats
-	private int[][] seatsArray = new int[totalRows][totalColumns + 1];
+	private int[][] seatsArray = new int[TicketingConstants.totalRows][TicketingConstants.totalColumns + 1];
 
 	private List<SeatHold> heldSeatList = new ArrayList<SeatHold>();
 
@@ -79,7 +77,10 @@ public class TicketServiceImpl implements TicketService {
 		SeatHold seatHold = null;
 
 		for (SeatHold retrievedSeatHold : heldSeatList)
-			if (seatHoldId == retrievedSeatHold.getId())
+			// Confirm the block id provided exists, the customer email
+			// parameter provided exists, and it matches the given block
+			if (seatHoldId == retrievedSeatHold.getId() && customerEmail != null
+					&& customerEmail.equals(retrievedSeatHold.getEmailContact()))
 				seatHold = retrievedSeatHold;
 		if (seatHold == null)
 			throw new SeatReservationCreationException(
@@ -221,16 +222,15 @@ public class TicketServiceImpl implements TicketService {
 	}
 
 	@Override
-	public void releaseLatestHold(Date date) {
+	public void releaseLatestHold(Date date) throws SeatHoldReservationReleaseException {
 		// Increment the date parameter by the expirationTime constant
-		date.setTime(date.getTime() + EXPIRATION_TIME_IN_MILLISECONDS);
+		date.setTime(date.getTime() + TicketingConstants.EXPIRATION_TIME_IN_MILLISECONDS);
 
 		System.out.println("date=" + date);
 
 		List<SeatHold> holdsToRemoveList = new ArrayList<SeatHold>();
 
 		for (SeatHold heldSeat : heldSeatList) {
-			System.out.println(heldSeat);
 			if (heldSeat.getCreationDate().before(date)) {
 				holdsToRemoveList.add(heldSeat);
 			}
@@ -242,11 +242,7 @@ public class TicketServiceImpl implements TicketService {
 		}
 		// Remove the held seats from the held seat list
 		for (SeatHold heldSeat : holdsToRemoveList) {
-			for (SeatAssignment seatAssignment : heldSeat.getHeldSeatList()) {
-				seatsArray[seatAssignment.getRowId()][seatAssignment.getColumnId()] = SeatHold.OPEN_SEAT;
-			}
-			setMaxAvailableSequentialRowLength(heldSeat.getHeldSeatList().get(0).getRowId());
-			heldSeatList.remove(heldSeat);
+			releaseHold(heldSeat.getId());
 		}
 
 	}

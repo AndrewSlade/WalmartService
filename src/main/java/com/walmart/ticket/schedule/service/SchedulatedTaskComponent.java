@@ -7,6 +7,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.walmart.ticket.service.TicketService;
+import com.walmart.ticketing.constants.TicketingConstants;
 
 @Component
 public class SchedulatedTaskComponent {
@@ -14,10 +15,10 @@ public class SchedulatedTaskComponent {
 	@Autowired
 	private TicketService ticketService;
 
-	private static final String idleReviewTimeoutMilliseconds = "" + TicketService.EXPIRATION_TIME_IN_MILLISECONDS;
+	private static final String IDLE_SEAT_HOLD_TIMEOUT = "" + TicketingConstants.EXPIRATION_TIME_IN_MILLISECONDS;
 
-	@Scheduled(fixedRateString = idleReviewTimeoutMilliseconds)
-	public void clearLocksForOldSessions() throws Exception {
+	@Scheduled(fixedRateString = IDLE_SEAT_HOLD_TIMEOUT)
+	public void clearExpiredHolds() throws Exception {
 
 		Date currentDate = new Date();
 

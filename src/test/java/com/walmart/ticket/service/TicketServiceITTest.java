@@ -11,6 +11,8 @@ import org.junit.Test;
 
 import com.walmart.seat.model.SeatHold;
 import com.walmart.seat.model.seat.SeatAssignment;
+import com.walmart.ticket.exception.service.SeatHoldReservationReleaseException;
+import com.walmart.ticket.exception.service.SeatReservationCreationException;
 
 /**
  * 
@@ -125,6 +127,15 @@ public class TicketServiceITTest {
 
 		assertNotNull(seatHold);
 
+		// Test exception handling
+		try {
+			ticketService.reserveSeats(seatHold.getId(), "wrong email");
+			// Test should not get to this point
+			assertTrue(false);
+		} catch (Exception e) {
+			assertTrue(e instanceof SeatReservationCreationException);
+		}
+
 		String reservationCode = ticketService.reserveSeats(seatHold.getId(), customerEmail);
 
 		assertNotNull(reservationCode);
@@ -143,7 +154,7 @@ public class TicketServiceITTest {
 			ticketService.releaseHold(seatId);
 			assertTrue(false);
 		} catch (Exception e) {
-			assertTrue(true);
+			assertTrue(e instanceof SeatHoldReservationReleaseException);
 		}
 
 		int numOfSeatsDesired = 5;
