@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.walmart.ticket.service.TicketServiceITTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2017-07-17T02:55:34" hostname="ARM-T450S-0299" time="0.345">
+  <properties/>
+  <testcase name="testFindAndHoldSeats" classname="com.walmart.ticket.service.TicketServiceITTest" time="0.002"/>
+  <testcase name="testReserveSeats" classname="com.walmart.ticket.service.TicketServiceITTest" time="0.324"/>
+  <testcase name="releaseHold" classname="com.walmart.ticket.service.TicketServiceITTest" time="0.002"/>
+  <testcase name="testFindAndHoldSeats2" classname="com.walmart.ticket.service.TicketServiceITTest" time="0.0"/>
+  <testcase name="testNumSeatsAvailable" classname="com.walmart.ticket.service.TicketServiceITTest" time="0.0"/>
+  <testcase name="testReleaseLatestHold" classname="com.walmart.ticket.service.TicketServiceITTest" time="0.016"/>
+  <system-out><![CDATA[0bda73d4-f5e0-41d8-ad54-ee1979945146
+date=Sun Jul 16 23:03:54 EDT 2017
+SeatHold [id=14, seatCount=0, heldSeatList=[Seat [rowId=0, columnId=1], Seat [rowId=0, columnId=2], Seat [rowId=0, columnId=3], Seat [rowId=0, columnId=4], Seat [rowId=0, columnId=5]], creationDate=Wed Dec 31 19:00:00 EST 1969, emailContact=customer@email.com]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
